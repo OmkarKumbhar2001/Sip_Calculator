@@ -3,18 +3,22 @@ function calculateSIP(monthlyInvestment, expectedReturn, timePeriod, increasingA
     let totalAmount = 0;
     let increasingInvestment = monthlyInvestment;
     let invested_amount = 0;
+    let annualInvestedAmount = 0;
 
+    console.log('Year | Invested Amount | Wealth Gained | Expected Amount');
+    
     for (let i = 1; i <= timePeriod * 12; i++) {
-        totalAmount += increasingInvestment; // Add current month's investment to total
-        const interest = totalAmount * monthlyRate; // Calculate interest for the current month
-        totalAmount += interest; // Add interest to total amount
-        invested_amount += increasingInvestment; // Accumulate the invested amount
-
-        console.log(`Total amount invested per month in month ${i}: ${increasingInvestment}`);
+        annualInvestedAmount += increasingInvestment;
+        totalAmount += increasingInvestment;
+        const interest = totalAmount * monthlyRate;
+        totalAmount += interest;
+        invested_amount += increasingInvestment;
 
         if (i % 12 === 0) {
-            increasingInvestment += increasingAmount; // Increase the monthly investment every year
-            console.log(`Total investment at the end of year ${i / 12}: ${invested_amount.toFixed(2)}`);
+            let wealthGained = totalAmount - invested_amount;
+            console.log(`${i / 12} | ${annualInvestedAmount.toFixed(2)} | ${wealthGained.toFixed(2)} | ${totalAmount.toFixed(2)}`);
+            increasingInvestment += increasingAmount;
+            annualInvestedAmount = 0;  // Reset annual investment for the new year
         }
     }
 
@@ -22,9 +26,9 @@ function calculateSIP(monthlyInvestment, expectedReturn, timePeriod, increasingA
 }
 
 const monthlyInvestment = 4000;
-const expectedReturn = 8;
-const timePeriod = 10;
-const increasingAmount = 1000;
+const expectedReturn = 10;
+const timePeriod = 6;
+const increasingAmount = 0;
 
 const result = calculateSIP(monthlyInvestment, expectedReturn, timePeriod, increasingAmount);
 
